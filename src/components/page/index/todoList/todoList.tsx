@@ -1,33 +1,34 @@
-import type { FC } from "react";
+// src/components/todoList/todoList.tsx
+import type React from "react";
 import TodoItem from "./todoItem/todoItem";
-
-interface Todo {
-  id: number;
-  title: string;
-  completed: boolean;
-}
+import type { Todo } from "../../../../types/globalTypes";
 
 interface TodoListProps {
   todos: Todo[];
-  onToggleComplete: (id: number) => void;
-  onDelete: (id: number) => void;
+  onComplete: (id: string) => void;
+  onEdit: (todo: Todo) => void;
+  onRemove: (id: string) => void;
 }
 
-const TodoList: FC<TodoListProps> = ({ todos, onToggleComplete, onDelete }) => (
-  <div className="p-4">
-    {todos.length > 0 ? (
-      todos.map((todo) => (
+const TodoList: React.FC<TodoListProps> = ({
+  todos,
+  onComplete,
+  onEdit,
+  onRemove,
+}) => {
+  return (
+    <div className="flex flex-col-reverse gap-4 mt-4">
+      {todos.map((todo) => (
         <TodoItem
           key={todo.id}
           todo={todo}
-          onToggleComplete={onToggleComplete}
-          onDelete={onDelete}
+          onComplete={onComplete}
+          onEdit={onEdit}
+          onRemove={onRemove}
         />
-      ))
-    ) : (
-      <p className="text-center text-gray-500">No todos found.</p>
-    )}
-  </div>
-);
+      ))}
+    </div>
+  );
+};
 
 export default TodoList;

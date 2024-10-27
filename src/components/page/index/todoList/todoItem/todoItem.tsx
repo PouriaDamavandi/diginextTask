@@ -1,38 +1,51 @@
-import type { FC } from "react";
+import type React from "react";
+import type { Todo } from "../../../../../types/globalTypes";
 import MainButton from "../../../../ui/button/MainButton/mainButton";
-
-interface Todo {
-  id: number;
-  title: string;
-  completed: boolean;
-}
 
 interface TodoItemProps {
   todo: Todo;
-  onToggleComplete: (id: number) => void;
-  onDelete: (id: number) => void;
+  onComplete: (id: string) => void;
+  onEdit: (todo: Todo) => void;
+  onRemove: (id: string) => void;
 }
 
-const TodoItem: FC<TodoItemProps> = ({ todo, onToggleComplete, onDelete }) => (
-  <div className={"flex items-center justify-between p-2 border-b "}>
-    <span className={`${todo.completed ? "line-through text-gray-500" : ""}`}>
-      {todo.title}
-    </span>
-    <div className="flex gap-2">
-      <MainButton
-        text={todo.completed ? "Undo" : "Complete"}
-        type="button"
-        className={`btn ${todo.completed ? "btn-warning" : "btn-primary"}`}
-        onClick={() => onToggleComplete(todo.id)}
-      />
-      <MainButton
-        text="Delete"
-        type="button"
-        className="btn btn-error"
-        onClick={() => onDelete(todo.id)}
-      />
+const TodoItem: React.FC<TodoItemProps> = ({
+  todo,
+  onComplete,
+  onEdit,
+  onRemove,
+}) => {
+  return (
+    <div
+      className={`todo-item flex justify-between items-center p-4 border rounded shadow ${
+        todo.completed ? "bg-green-100" : "bg-white"
+      }`}
+    >
+      <span className={`flex-1 ${todo.completed ? "line-through" : ""}`}>
+        {todo.title}
+      </span>
+      <div className="flex gap-2">
+        <MainButton
+          text="Complete"
+          type="button"
+          className="btn-complete"
+          onClick={() => onComplete(todo.id)}
+        />
+        <MainButton
+          text="Edit"
+          type="button"
+          className="btn-edit"
+          onClick={() => onEdit(todo)}
+        />
+        <MainButton
+          text="Remove"
+          type="button"
+          className="btn-remove"
+          onClick={() => onRemove(todo.id)}
+        />
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default TodoItem;
