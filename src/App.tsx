@@ -1,12 +1,7 @@
-import "./App.css";
+import HomePage from "./components/page/index/home";
 
 function App() {
-  return (
-    <div className="App">
-      myTodo
-      <h1 className="bg-mainPurple text-mainWhite">hiiiiiiiii</h1>
-    </div>
-  );
+  return <HomePage />;
 }
 
 export default App;
